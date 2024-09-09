@@ -154,12 +154,12 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
 
    - 数据格式选择“JSON”。
  
-   ![](./doc/figure_cn/upload_profile_2.png)
+   ![upload_profile_2.png](./doc/figure_cn/upload_profile_2.png)
 
 * 产品创建成功后，单击“详情”进入产品详情，在功能定义页面，单击“上传模型文件”，上传烟感产品模型[smokeDetector](https://iot-developer.obs.cn-north-4.myhuaweicloud.com/smokeDetector.zip) 。
     生成的产品模型如下图所示。
 
-    ![](./doc/figure_cn/upload_profile_2_1.png)
+    ![upload_profile_2_1.png](./doc/figure_cn/upload_profile_2_1.png)
 
 * 在左侧导航栏，选择“设备 > 所有设备”，单击右上角“注册设备”，在弹出的页面中，填写注册设备参数，然后单击“确定”。
 
