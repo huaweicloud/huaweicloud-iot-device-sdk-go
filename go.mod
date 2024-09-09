@@ -3,15 +3,18 @@ module github.com/huaweicloud/huaweicloud-iot-device-sdk-go
 go 1.18
 
 require (
-	github.com/eclipse/paho.mqtt.golang v1.4.3
-	github.com/go-resty/resty/v2 v2.4.0
-	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+	github.com/eclipse/paho.mqtt.golang v1.5.0
+	github.com/go-co-op/gocron v1.35.2
+	github.com/golang/glog v1.1.2
+	github.com/panjf2000/ants/v2 v2.9.0
 	github.com/satori/go.uuid v1.2.0
 )
 
 require (
-	github.com/gorilla/websocket v1.5.0 // indirect
-	golang.org/x/net v0.8.0 // indirect
-	golang.org/x/sync v0.1.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+	github.com/google/uuid v1.6.0 // indirect
+	github.com/gorilla/websocket v1.5.3 // indirect
+	github.com/robfig/cron/v3 v3.0.1 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
+	golang.org/x/net v0.27.0 // indirect
+	golang.org/x/sync v0.7.0 // indirect
 )
