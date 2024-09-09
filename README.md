@@ -1,8 +1,7 @@
-[English](./README.md) | Simplified Chinese
+English | [简体中文](./README_CN.md)
 
 # huaweicloud-iot-device-sdk-go
 
-[TOC]
 # 0. Version update instructions
 | Version | Change Type | Description |
 |:-------|:-|:-------------------------------------------------|
