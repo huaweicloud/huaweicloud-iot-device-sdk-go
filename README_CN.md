@@ -145,7 +145,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
 
 * 点击“接入信息”,查看MQTT设备接入地址并保存该地址。
 
-   ![](./doc/figure_cn/get_access_address.png)
+   ![](.\doc\figure_cn\get_access_address.png)
 
 
 * 在设备接入控制台选择“产品”，单击右上角的”创建产品”，在弹出的页面中，填写“产品名称“、“协议类型”、“数据格式”、“厂商名称”、“所属行业”、“设备类型”等信息，然后点击右下角“立即创建”。
@@ -154,7 +154,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
 
    - 数据格式选择“JSON”。
  
-   ![upload_profile_2.png](./doc/figure_cn/upload_profile_2.png)
+   ![upload_profile_2.png](.\doc\figure_cn\upload_profile_2.png)
 
 * 产品创建成功后，单击“详情”进入产品详情，在功能定义页面，单击“上传模型文件”，上传烟感产品模型[smokeDetector](https://iot-developer.obs.cn-north-4.myhuaweicloud.com/smokeDetector.zip) 。
     生成的产品模型如下图所示。
