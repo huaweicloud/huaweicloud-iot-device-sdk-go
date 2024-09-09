@@ -145,7 +145,7 @@ Take the smoke sensor as an example to experience functions such as message repo
 
 * Click "Access Information" to view the MQTT device access address and save the address.
 
-   ![](./doc/figure_en/get_access_address_en.png)	
+   ![](.\doc\figure_en\get_access_address_en.png)	
 
 
 * Select "Product" in the device access console, click "Create Product" in the upper right corner, and in the pop-up page, fill in the "Product Name", "Protocol Type", "Data Format", "Manufacturer Name", " Industry", "Equipment Type" and other information, and then click "Create Now" in the lower right corner.
@@ -154,16 +154,16 @@ Take the smoke sensor as an example to experience functions such as message repo
 
    - Select "JSON" as the data format.
  
-   ![](./doc/figure_en/upload_profile_2_en.png)
+   ![](.\doc\figure_en\upload_profile_2_en.png)
 
 * After the product is successfully created, click "Details" to enter the product details. On the function definition page, click "Upload Model File" to upload the smoke detector product model [smokeDetector](https://iot-developer.obs.cn-north -4.myhuaweicloud.com/smokeDetector.zip).
     The generated product model is shown in the figure below.
 
-    ![](./doc/figure_en/upload_profile_2_1_en.png)
+    ![](.\doc\figure_en\upload_profile_2_1_en.png)
 
 * In the left navigation bar, select "Devices > All Devices", click "Register Device" in the upper right corner, in the pop-up page, fill in the registration device parameters, and then click "OK".
 
-   ![](./doc/figure_en/upload_profile_3_en.png)
+   ![](.\doc\figure_en\upload_profile_3_en.png)
 
 * After the device is successfully registered, the device identification code, device ID, and key are saved.
 
@@ -246,11 +246,11 @@ For example:
 
 If the connection is successful, the "Message Tracking" on the online debugging page will display:
 
-![](./doc/figure_en/init_1_en.png)
+![](.\doc\figure_en\init_1_en.png)
 
 The running log is:
 
-![](./doc/figure_en/init_2_en.png)
+![](.\doc\figure_en\init_2_en.png)
 
 
 
@@ -279,11 +279,11 @@ The example prints the content of the command in the CommandHandler function and
 
 Execute the main method and issue commands to the device on the "Online Debugging" page. The code will produce the following output:
 
-![](./doc/figure_en/command_1_en.png)
+![](.\doc\figure_en\command_1_en.png)
 
 At the same time, the device's response to the command can be found in the "Message Trace" of "Online Debugging".
 
-![](./doc/figure_en/command_2_en.png)
+![](.\doc\figure_en\command_2_en.png)
 
 
 ## 4.5 Platform message delivery/device message reporting
@@ -307,7 +307,7 @@ Message delivery refers to the platform delivering messages to the device. Messa
 ```
 In the above code, you can report the message to a custom topic through the SendMessage method, or you can not fill in the topic in the message, and the message will be reported to the default topic of the platform. If sent successfully, you can see on the "Online Debugging" page:
 
-![](./doc/figure_en/message_1_en.png)
+![](.\doc\figure_en\message_1_en.png)
 
 ### 4.5.2 Message delivery
 /samples/message/message_demo.go is an example of message delivery.
@@ -333,7 +333,7 @@ In the above code, you can report the message to a custom topic through the Send
 ```
 
 In the above code, the ConnectHandler can subscribe to messages delivered by a custom topic through SubscribeCustomizeTopic after the platform establishes a link. If messages delivered by a custom topic are not used, messages delivered by the platform's default topic are accepted through the AddMessageHandler method. After executing the main function, you can use the platform to deliver messages. The code will produce the following output:
-![](./doc/figure_en/message_2_en.png)
+![](.\doc\figure_en\message_2_en.png)
 
 ## 4.6 Properties reporting/setting
 Properties reporting refers to the device reporting the current attribute values ​​to the platform. Property settings refer to the platform setting property values ​​of the device.
@@ -364,11 +364,11 @@ Used by the device to report properties data to the platform in the format defin
 The above code will report the temperature attribute.
 If the report is successful, the "Online Debugging" page will display:
 
-![](./doc/figure_en/properties_1_en.png)
+![](.\doc\figure_en\properties_1_en.png)
 
 Select "Devices > All Devices" in the left navigation bar, select the registered device to view, and you can see the attribute values ​​just reported in "Device Shadow".
 
-![](./doc/figure_en/properties_2_en.png)
+![](.\doc\figure_en\properties_2_en.png)
 
 ### 4.6.2 Platform settings device properties
 If the device is set as a property listener through the AddPropertiesSetHandler and SetPropertyQueryHandler methods, that is:
@@ -417,11 +417,11 @@ def run():
 At "Device Shadow", click "Property Configuration" to set the expected value of the property.
 If the set expected value is different from the value reported by the device, the platform will automatically send the expected value to the device when the device goes online. (That is, the platform sets device properties)
 
-![](./doc/figure_en/properties_3_en.png)
+![](.\doc\figure_en\properties_3_en.png)
 
 Run the above run function and get:
 
-![](./doc/figure_en/properties_4_en.png)
+![](.\doc\figure_en\properties_4_en.png)
 
 ## 4.7 Device Shadow
 Used by the device to obtain device shadow data from the platform. The device can obtain the platform device shadow data to synchronize the device attribute values, thereby completing the modification of the device attribute values.
@@ -521,14 +521,14 @@ File upload/download process reference [File Upload](https://support.huaweicloud
 
 * Configure OBS storage in the console.
    
-   ![](./doc/figure_en/obs_config_en.png)
+   ![](.\doc\figure_en\obs_config_en.png)
 
 * Preset upload files. The file to be uploaded in the above example is /iot_device_demo/filemanage/download/upload_test.txt.
    In the file download part, download the uploaded upload_test.txt and save it to /iot_device_demo/filemanage/download/download.txt.
 
 * Execute the above example to see the storage results on OBS.
    
-   ![](./doc/figure_en/obs_object_en.png)
+   ![](.\doc\figure_en\obs_object_en.png)
 
 ## 4.10 Device time synchronization
 An example of device time synchronization is implemented in /samples/time_sync/time_sync_demo.go.
@@ -729,7 +729,7 @@ Users can report different log information in different periods of the device ac
 
 ## 4.13 End-side rules
 Create a client-side rule in the console:
-![](./doc/figure_en/device_rule_en.png)
+![](.\doc\figure_en\device_rule_en.png)
 
 The ruleManage() method in /samples/rule/rule_demo.go implements an example of end-side rules. You can enable end-side rules through the following parameters
 ```go
@@ -796,7 +796,7 @@ def run():
 ```
 
 Executing the run function, the code will produce the following output:
-![](./doc/figure_en/device_rule_action_en.png)
+![](.\doc\figure_en\device_rule_action_en.png)
 
 If you want to use a custom method to process the actions of end-side rules, customRuleManage() in /samples/rule/rule_demo.go implements an example of customizing end-side rules.
 The RuleActionHandler in the following code is a custom end-side rule processing method, and the instance of RuleActionHandler is set as the command listener, that is:
@@ -815,14 +815,14 @@ device.Client.RuleActionHandler = func(actions []model.Action) bool {
 
 When the rule is triggered, the device will automatically call the RuleActionHandler method in the listener when it receives the command.
 The example implements some custom operations in the RuleActionHandler method. For example the following output:
-![](./doc/figure_en/device_rule_action_custom_en.png)
+![](.\doc\figure_en\device_rule_action_custom_en.png)
 
 ## 4.14 Equipment issuance
 Create a distribution policy in the console with the keyword xxx:
-![](./doc/figure_en/bootstrap_policy_static_en.png)
+![](.\doc\figure_en\bootstrap_policy_static_en.png)
 
 Create a device in the console, select static policy as the policy type, and select the product in the same area as the created policy:
-![](./doc/figure_en/bootstrap_create_device_en.png)
+![](.\doc\figure_en\bootstrap_create_device_en.png)
 
 The bootstrapSecret() method in /samples/bs/bootstrap_sample.go implements an example of using static policies to allocate devices. Change Servers to the issued address, select the device ID and password just created, and select the device and password.
 The value xxx of BaseStrategyKeyword in BootStrapBody is the keyword of the created static strategy. After filling in the correct certificate information.
@@ -856,7 +856,7 @@ The value xxx of BaseStrategyKeyword in BootStrapBody is the keyword of the crea
 	device.ReportProperties(test_util.GeneratePropertiesMessage(28))
 ```
 Executing the run function, the code will produce the following output:
-![](./doc/figure_en/bootstrap_device_success_en.png)
+![](.\doc\figure_en\bootstrap_device_success_en.png)
 
 In /samples/bs/bootstrap_sample.go, in addition to the bootstrapSecret() method for issuing key authentication devices, there are also the methods bootstrapCert() for issuing certificate devices, the method bootstrapScopeIdSecretStaticPolicy() for issuing key authentication device groups, and the use of certificates. The method bootstrapScopeIdCertStaticPolicy() is used to issue authentication registration group devices.After the device is successfully issued, the access address will be stored in the local server_info.txt file. Next time it is executed, the address in the file will be used first for access. If the device key is updated or other devices are used for provisioning, you need to delete the address. file and then redistribute it.Use static policies for registration group device provisioning. For detailed parameters, please refer to the following link:
 [Device access provisioning example](https://support.huaweicloud.com/qs-iotps/iot_03_0006.html)
