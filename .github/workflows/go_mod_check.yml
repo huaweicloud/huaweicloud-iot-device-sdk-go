@@ -1,0 +1,22 @@
+name: go mod check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  go_mod_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: "go.mod"
+      - name: Run Go Mod Check Action
+        uses: shoothzj/go-mod-check-action@main
+        with:
+          prohibitIndirectDepUpdate: 'true'

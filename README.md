@@ -5,7 +5,7 @@ English | [简体中文](./README_CN.md)
 # 0. Version update instructions
 | Version | Change Type | Description |
 |:-------|:-|:-------------------------------------------------|
-| v1.0.0 | New features | Provides the ability to connect to the Huawei Cloud IoT platform to facilitate users to implement business scenarios such as secure access, device management, data collection, command issuance, device provisioning, and client-side rules |   
+| v1.0.0 | New features | Provides the ability to connect to the Huawei Cloud IoT platform to facilitate users to implement business scenarios such as secure access, device management, data collection, command issuance, device provisioning, and client-side rules |
 
 # 1. Preface
 huaweicloud-iot-device-sdk-go provides a Go version of the SDK for devices to access the Huawei Cloud IoT platform. It provides communication capabilities between devices and platforms, as well as advanced services such as device services, gateway services, and OTA. It also provides various The scene provides rich demo codes. IoT device developers can use the SDK to greatly simplify development complexity and quickly access the platform.
@@ -145,7 +145,7 @@ Take the smoke sensor as an example to experience functions such as message repo
 
 * Click "Access Information" to view the MQTT device access address and save the address.
 
-   ![](.\doc\figure_en\get_access_address_en.png)	
+   ![](.\doc\figure_en\get_access_address_en.png)
 
 
 * Select "Product" in the device access console, click "Create Product" in the upper right corner, and in the pop-up page, fill in the "Product Name", "Protocol Type", "Data Format", "Manufacturer Name", " Industry", "Equipment Type" and other information, and then click "Create Now" in the lower right corner.
@@ -153,7 +153,7 @@ Take the smoke sensor as an example to experience functions such as message repo
    - Select "MQTT" as the protocol type;
 
    - Select "JSON" as the data format.
- 
+
    ![](.\doc\figure_en\upload_profile_2_en.png)
 
 * After the product is successfully created, click "Details" to enter the product details. On the function definition page, click "Upload Model File" to upload the smoke detector product model [smokeDetector](https://iot-developer.obs.cn-north -4.myhuaweicloud.com/smokeDetector.zip).
@@ -199,7 +199,7 @@ The page has command issuing and message tracking functions.
 
    * If you use port 8883 to access the platform through key authentication (recommended, all SDK demos access the platform through this method), you need to write the obtained device ID, key and preset CA certificate.
    Preset certificate:/samples/resources/root.pem
-  
+
    ```go
     authConfig := &amp;config.ConnectAuthConfig{
 		Id:       "{your device id}",
@@ -211,7 +211,7 @@ The page has command issuing and message tracking functions.
    ```
    * If you use port 8883 and access the platform through X509 certificate authentication, you need to write the obtained device ID, certificate information and pre-made CA certificate. For more X509 certificate access, please refer to [X509 Certificate Access](https://support.huaweicloud.com/bestpractice-iothub/iot_bp_0077.html)
      Preset certificate:/samples/resources/root.pem
-   
+
     ```go
      authConfig := &amp;config.ConnectAuthConfig{
 		 Id:       "{your device id}",
@@ -402,7 +402,7 @@ The example prints the content of the property settings in the PropertiesSetHand
 
 def run():
     < create device code here ... >
-    
+
     //Register platform setting attribute callback. When the application sets device attributes through the API, this callback will be called. It supports registering multiple callbacks.
 	device.Client.AddPropertiesSetHandler(func(propertiesSetRequest model.DevicePropertyDownRequest) bool {
 		glog.Infof("I get property set command")
@@ -505,7 +505,7 @@ An example of file upload/download is implemented in /samples/file/upload_file.g
 
 ```go
     < create device code here ... >
-    
+
     fileName := "test_upload.txt"
 	uploadFilePath := currentPath + "\\download\\test_upload.txt"
     //Upload file
@@ -520,14 +520,14 @@ An example of file upload/download is implemented in /samples/file/upload_file.g
 File upload/download process reference [File Upload](https://support.huaweicloud.com/usermanual-iothub/iot_01_0033.html)
 
 * Configure OBS storage in the console.
-   
+
    ![](.\doc\figure_en\obs_config_en.png)
 
 * Preset upload files. The file to be uploaded in the above example is /iot_device_demo/filemanage/download/upload_test.txt.
    In the file download part, download the uploaded upload_test.txt and save it to /iot_device_demo/filemanage/download/download.txt.
 
 * Execute the above example to see the storage results on OBS.
-   
+
    ![](.\doc\figure_en\obs_object_en.png)
 
 ## 4.10 Device time synchronization
@@ -754,9 +754,9 @@ The example prints the content of the command in the CommandHandler method. Cust
 
 ```python
 def run():
-    
+
     < create device code here ... >
-    
+
     # Set up listener
     device.Client.CommandHandler = func(command model.Command) (bool, interface{}) {
 		glog.Infof("command device id is %s", command.ObjectDeviceId)
@@ -767,7 +767,7 @@ def run():
 			"cost_time": 12,
 		}
 	}
-    
+
     connect := device.Connect()
 	glog.Infof("connect result : %v", connect)
 
@@ -919,4 +919,3 @@ Refer to [Device Access Interface Documentation](./IoT-Device-SDK-Python-API Doc
 
 # 7.0 More documentation
 Refer to [Device Access More Documentation](https://support.huaweicloud.com/devg-iothub/iot_02_0178.html)
-

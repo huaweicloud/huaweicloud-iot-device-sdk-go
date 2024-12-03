@@ -125,8 +125,8 @@ func updateSubDeviceStats() {
 	gatewayDevice.Client.SubDeviceStatusRespHandler = func(response model.SubDeviceStatusResp) {
 		if len(response.SuccessfulDevices) > 0 {
 			glog.Infof("success update device status.")
-			for _, sucessDevice := range response.SuccessfulDevices {
-				glog.Infof("update device : %s status: %s", sucessDevice.DeviceId, sucessDevice.Status)
+			for _, successDevice := range response.SuccessfulDevices {
+				glog.Infof("update device : %s status: %s", successDevice.DeviceId, successDevice.Status)
 			}
 		}
 		if len(response.FailedDevices) > 0 {
