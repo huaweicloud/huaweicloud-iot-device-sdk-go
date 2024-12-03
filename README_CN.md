@@ -5,7 +5,7 @@
 # 0.版本更新说明
 | 版本     |变更类型| 说明                                               |
 |:-------|:-|:-------------------------------------------------|
-| v1.0.0 |新增功能| 提供对接华为云IoT物联网平台能力，方便用户实现安全接入、设备管理、数据采集、命令下发、设备发放、端侧规则等业务场景                         |   
+| v1.0.0 |新增功能| 提供对接华为云IoT物联网平台能力，方便用户实现安全接入、设备管理、数据采集、命令下发、设备发放、端侧规则等业务场景                         |
 
 # 1.前言
 huaweicloud-iot-device-sdk-go提供设备接入华为云IoT物联网平台的Go版本的SDK，提供设备和平台之间通讯能力，以及设备服务、网关服务、OTA等高级服务，并且针对各种场景提供了丰富的demo代码。IoT设备开发者使用SDK可以大大简化开发复杂度，快速的接入平台。
@@ -153,7 +153,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
    - 协议类型选择“MQTT”；
 
    - 数据格式选择“JSON”。
- 
+
    ![upload_profile_2.png](.\doc\figure_cn\upload_profile_2.png)
 
 * 产品创建成功后，单击“详情”进入产品详情，在功能定义页面，单击“上传模型文件”，上传烟感产品模型[smokeDetector](https://iot-developer.obs.cn-north-4.myhuaweicloud.com/smokeDetector.zip) 。
@@ -199,7 +199,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
 
    * 如果您使用8883端口通过密钥鉴权接入平台（推荐使用，SDK的demo均通过此方法接入平台），需要写入获取的设备ID、密钥以及预置CA证书。
    预置的证书：/samples/resources/root.pem
-  
+
    ```go
     authConfig := &config.ConnectAuthConfig{
 		Id:       "{your device id}",
@@ -211,7 +211,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
    ```
    * 如果您使用8883端口并通过X509证书鉴权接入平台，则需要写入获取的设备ID，证书信息以及预制CA证书。更多X509证书接入请参考[X509证书接入](https://support.huaweicloud.com/bestpractice-iothub/iot_bp_0077.html)
      预置的证书：/samples/resources/root.pem
-   
+
     ```go
      authConfig := &config.ConnectAuthConfig{
 		 Id:       "{your device id}",
@@ -402,7 +402,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
 
 def run():
     < create device code here ... >
-    
+
     // 注册平台设置属性callback,当应用通过API设置设备属性时，会调用此callback，支持注册多个callback
 	device.Client.AddPropertiesSetHandler(func(propertiesSetRequest model.DevicePropertyDownRequest) bool {
 		glog.Infof("I get property set command")
@@ -505,7 +505,7 @@ def run():
 
 ```go
     < create device code here ... >
-    
+
     fileName := "test_upload.txt"
 	uploadFilePath := currentPath + "\\download\\test_upload.txt"
     // 上传文件
@@ -520,14 +520,14 @@ def run():
 文件上传/下载流程参考[文件上传](https://support.huaweicloud.com/usermanual-iothub/iot_01_0033.html)
 
 * 在控制台中配置OBS存储。
-   
+
    ![](.\doc\figure_cn\obs_config.png)
 
 * 预置好上传文件。上面例子的待上传文件为/iot_device_demo/filemanage/download/upload_test.txt。
    文件下载部分将已上传的upload_test.txt下载下来保存到/iot_device_demo/filemanage/download/download.txt。
 
 * 执行上面例子可到OBS上看到存储结果。
-   
+
    ![](.\doc\figure_cn\obs_object.png)
 
 ## 4.10 设备时间同步
@@ -536,7 +536,7 @@ def run():
 ```go
    < create device code here ... >
 
-    // 设置时间同步服务 
+    // 设置时间同步服务
     device.Client.SyncTimeResponseHandler = func(deviceSendTime, serverRecvTime, serverSendTime int64) {
 		deviceRecvTime := time.Now().UnixNano() / int64(time.Millisecond)
 		now := (serverRecvTime + serverSendTime + deviceRecvTime + deviceSendTime) / 2
@@ -754,9 +754,9 @@ device.Client.CommandHandler = func(command model.Command) (bool, interface{}) {
 
 ```python
 def run():
-    
+
     < create device code here ... >
-    
+
     # 设置监听器
     device.Client.CommandHandler = func(command model.Command) (bool, interface{}) {
 		glog.Infof("command device id is %s", command.ObjectDeviceId)
@@ -767,7 +767,7 @@ def run():
 			"cost_time": 12,
 		}
 	}
-    
+
     connect := device.Connect()
 	glog.Infof("connect result : %v", connect)
 
