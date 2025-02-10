@@ -2,6 +2,16 @@ English | [简体中文](./README_CN.md)
 
 # huaweicloud-iot-device-sdk-go
 
+## 📋 Requirements
+
+- Go 1.18+
+
+## 🚀 Install
+
+```
+go get github.com/huaweicloud/huaweicloud-iot-device-sdk-go
+```
+
 # 0. Version update instructions
 | Version | Change Type | Description |
 |:-------|:-|:-------------------------------------------------|
