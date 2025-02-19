@@ -44,13 +44,14 @@ import (
 type HttpClient interface {
 	UploadFile(filename, uri string) bool
 	DownloadFile(filename, uri, token string) bool
+	OTADownloadFile(upgradeType byte, filename, uri, token string) bool
 }
 
 type httpClient struct {
 	client *http.Client
 }
 
-func (client *httpClient) DownloadFile(fileName, downloadUrl, token string) bool {
+func (client *httpClient) OTADownloadFile(upgradeType byte, fileName, downloadUrl, token string) bool {
 	glog.Infof("begin to download file %s, url = %s", fileName, downloadUrl)
 	fileName = iot.SmartFileName(fileName)
 
@@ -73,9 +74,11 @@ func (client *httpClient) DownloadFile(fileName, downloadUrl, token string) bool
 		return false
 	}
 
-	request.Header.Set("Content-Type", "text/plain")
+	if upgradeType < 2 {
+		request.Header.Set("Content-Type", "text/plain")
+	}
 	request.Header.Set("Host", originalUri.Host)
-	if len(token) != 0 {
+	if len(token) != 0 && upgradeType < 2 {
 		request.Header.Set("Authorization", "Bearer "+token)
 	}
 	resp, err := client.client.Do(request)
@@ -95,6 +98,10 @@ func (client *httpClient) DownloadFile(fileName, downloadUrl, token string) bool
 	}
 
 	return true
+}
+
+func (client *httpClient) DownloadFile(fileName, downloadUrl, token string) bool {
+	return client.OTADownloadFile(0, fileName, downloadUrl, token)
 }
 
 func (client *httpClient) UploadFile(filename, uri string) bool {
