@@ -540,7 +540,7 @@ func (mqttClient *MqttDeviceClient) handleOtaService(entry model.DataEntry) {
 	case "version_query":
 		// 查询软固件版本
 		mqttClient.reportVersion()
-	case "firmware_upgrade":
+	case "firmware_upgrade", "firmware_upgrade_v2":
 		upgradeInfo := &model.UpgradeInfo{}
 		jsonString := iot.Interface2JsonString(entry.Paras)
 		err := json.Unmarshal([]byte(jsonString), upgradeInfo)
@@ -548,14 +548,22 @@ func (mqttClient *MqttDeviceClient) handleOtaService(entry model.DataEntry) {
 			glog.Warningf("unmarshal firware upgrade failed. err: %s", err.Error())
 			return
 		}
-		mqttClient.upgradeDevice(1, upgradeInfo)
+		if "firmware_upgrade" == eventType {
+			mqttClient.upgradeDevice(1, upgradeInfo)
+		} else {
+			mqttClient.upgradeDevice(3, upgradeInfo)
+		}
 
-	case "software_upgrade":
+	case "software_upgrade", "software_upgrade_v2":
 		upgradeInfo := &model.UpgradeInfo{}
 		if json.Unmarshal([]byte(iot.Interface2JsonString(entry.Paras)), upgradeInfo) != nil {
 			return
 		}
-		mqttClient.upgradeDevice(0, upgradeInfo)
+		if "software_upgrade" == eventType {
+			mqttClient.upgradeDevice(0, upgradeInfo)
+		} else {
+			mqttClient.upgradeDevice(2, upgradeInfo)
+		}
 	}
 }
 

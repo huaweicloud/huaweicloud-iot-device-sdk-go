@@ -57,7 +57,7 @@ func otaUpgrade() {
 		return "v1.0", "v1.0"
 	}
 
-	// upgradeType 0： 软件升级 1： 固件升级
+	// upgradeType 0：软件升级  1：固件升级  2：OBS软件升级  3：OBS固件升级
 	device.Client.DeviceUpgradeHandler = func(upgradeType byte, info model.UpgradeInfo) model.UpgradeProgress {
 		glog.Infof("begin to handle upgrade process")
 		upgradeProcess := model.UpgradeProgress{}
@@ -69,7 +69,7 @@ func otaUpgrade() {
 			return upgradeProcess
 		}
 		currentPath = currentPath + "\\download\\ota.txt"
-		downloadFlag := file.CreateHttpClient().DownloadFile(currentPath, info.Url, info.AccessToken)
+		downloadFlag := file.CreateHttpClient().OTADownloadFile(upgradeType, currentPath, info.Url, info.AccessToken)
 		if !downloadFlag {
 			glog.Errorf("down load file { %s } failed", currentPath)
 			upgradeProcess.ResultCode = 10
