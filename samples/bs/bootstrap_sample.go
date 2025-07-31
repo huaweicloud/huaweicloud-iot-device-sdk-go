@@ -46,11 +46,11 @@ func bootstrapSecret() {
 	// 发放平台注册的设备ID
 	deviceId := "your device id"
 	// 设备秘钥
-	pwd := "your pwd"
+	pwd := "your device secret"
 
 	authConfig := config2.ConnectAuthConfig{
 		Id:             deviceId,
-		Password:       pwd,
+		Secret:         pwd,
 		Servers:        "mqtts://{mqtt access ip}:8883",
 		UseBootstrap:   true,
 		BsServerCaPath: "bs server ca cert path",
@@ -112,11 +112,11 @@ func bootstrapScopeIdSecretStaticPolicy() {
 	// 自定义设备id
 	deviceId := "your device id"
 	// 注册组秘钥
-	pwd := "your password"
+	pwd := "your Secret"
 
 	authInfo := &config2.ConnectAuthConfig{
 		Id:             deviceId,
-		Password:       pwd,
+		Secret:         pwd,
 		Servers:        "mqtts://{MQTT_ACCESS_ADDRESS}:8883",
 		UseBootstrap:   true,
 		BsServerCaPath: "bs server ca cert path",

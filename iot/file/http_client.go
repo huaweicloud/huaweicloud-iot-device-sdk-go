@@ -73,7 +73,6 @@ func (client *httpClient) OTADownloadFile(upgradeType byte, fileName, downloadUr
 		glog.Errorf("download file request failed %v", err)
 		return false
 	}
-
 	if upgradeType < 2 {
 		request.Header.Set("Content-Type", "text/plain")
 	}

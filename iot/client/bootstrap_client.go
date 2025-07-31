@@ -54,7 +54,7 @@ type BootstrapClient interface {
 func NewBootstrapClient(authConfig config.ConnectAuthConfig) (BootstrapClient, error) {
 	client := &bsClient{
 		id:             authConfig.Id,
-		password:       authConfig.Password,
+		Secret:         authConfig.Secret,
 		bsServer:       authConfig.Servers,
 		serverCaPath:   authConfig.BsServerCaPath,
 		connectTimeOut: authConfig.ConnectTimeOut,
@@ -77,7 +77,7 @@ func NewBootstrapClient(authConfig config.ConnectAuthConfig) (BootstrapClient, e
 
 type bsClient struct {
 	id             string
-	password       string
+	Secret         string
 	bsServer       string // 设备发放接入地址
 	serverCaPath   string
 	scopeConfig    *config.ScopeConfig // 注册组的scope信息
@@ -167,9 +167,9 @@ func (bs *bsClient) handleSubscribeHandler() func(client mqtt.Client, message mq
 func (bs *bsClient) generatePwd() (string, error) {
 	// 注册组秘钥模式
 	if bs.scopeConfig != nil && bs.scopeConfig.ScopeId != "" && bs.scopeConfig.ScopeType == constants.AuthTypePassword {
-		password, err := base64.StdEncoding.DecodeString(bs.password)
+		password, err := base64.StdEncoding.DecodeString(bs.Secret)
 		if err != nil {
-			glog.Warningf("decode password failed.")
+			glog.Warningf("decode Secret failed.")
 			return "", err
 		}
 		newPwd, err := iot.HmacSha256(string(password), bs.id)
@@ -182,8 +182,8 @@ func (bs *bsClient) generatePwd() (string, error) {
 		}
 		return newPwd, nil
 	}
-	if bs.password != "" {
-		pwd, err := iot.HmacSha256(bs.password, iot.TimeStamp())
+	if bs.Secret != "" {
+		pwd, err := iot.HmacSha256(bs.Secret, iot.TimeStamp())
 		if err != nil {
 			return "", err
 		}

@@ -89,7 +89,7 @@ func checkAuthConfig(authConfig *config.ConnectAuthConfig) bool {
 		glog.Warning("device id is empty.")
 		return false
 	}
-	if authConfig.AuthType == 0 && len(authConfig.Password) == 0 {
+	if authConfig.AuthType == 0 && len(authConfig.Secret) == 0 {
 		glog.Warning("password is empty when auth type is password.")
 		return false
 	}
@@ -121,6 +121,9 @@ func checkAuthConfig(authConfig *config.ConnectAuthConfig) bool {
 	}
 	if authConfig.BatchSubDeviceSize <= 0 {
 		authConfig.BatchSubDeviceSize = 10
+	}
+	if authConfig.ConnectTimeout <= 0 {
+		authConfig.BatchSubDeviceSize = 120
 	}
 	return true
 }
