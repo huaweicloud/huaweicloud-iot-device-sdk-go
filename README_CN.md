@@ -13,9 +13,10 @@ go get github.com/huaweicloud/huaweicloud-iot-device-sdk-go
 ```
 
 # 0.版本更新说明
-| 版本     |变更类型| 说明                                               |
-|:-------|:-|:-------------------------------------------------|
-| v1.0.0 |新增功能| 提供对接华为云IoT物联网平台能力，方便用户实现安全接入、设备管理、数据采集、命令下发、设备发放、端侧规则等业务场景                         |
+| 版本     | 变更类型 | 说明                                                         |
+|:-------|:-----|:-----------------------------------------------------------|
+| v1.0.1 | 功能优化 | 支持MQTT协议连接心跳修改、添加心跳说明、连接超时时间从2s变为20s                |
+| v1.0.0 | 新增功能 | 提供对接华为云IoT物联网平台能力，方便用户实现安全接入、设备管理、数据采集、命令下发、设备发放、端侧规则等业务场景 |   
 
 # 1.前言
 huaweicloud-iot-device-sdk-go提供设备接入华为云IoT物联网平台的Go版本的SDK，提供设备和平台之间通讯能力，以及设备服务、网关服务、OTA等高级服务，并且针对各种场景提供了丰富的demo代码。IoT设备开发者使用SDK可以大大简化开发复杂度，快速的接入平台。
@@ -202,7 +203,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
 	authConfig := &config2.ConnectAuthConfig{
 		Id:       "{your device id}",
 		Servers:  "mqtt://{access_address}:1883",
-		Password: "your device secret",
+		Secret: "your device secret",
 	}
 	mqttDevice := device2.NewMqttDevice(authConfig)
    ```
@@ -214,7 +215,7 @@ SDK面向运算、存储能力较强的嵌入式终端设备，开发者通过�
     authConfig := &config.ConnectAuthConfig{
 		Id:       "{your device id}",
 		Servers:  "mqtts://{access_address}:8883",
-		Password: "your device secret",
+		Secret: "your device secret",
 		ServerCaPath: "./resources/root.pem",
 	}
 	mqttDevice := device.NewMqttDevice(authConfig)
@@ -584,7 +585,7 @@ def run():
     authConfig := &config.ConnectAuthConfig{
 		Id:           "your device id",
 		Servers:      "mqtts://{your access ip}:8883",
-		Password:     "your device key",
+		Secret:     "your device key",
 		ServerCaPath: "./resources/root.pem",
 	}
 	mqttDevice := gateway.NewMqttGatewayDevice(authConfig)
@@ -841,11 +842,11 @@ BootStrapBody中BaseStrategyKeyword的值xxx为创建的静态策略的关键字
     // 发放平台注册的设备ID
 	deviceId := "your device id"
 	// 设备秘钥
-	pwd := "your device password"
+	pwd := "your device Secret"
 
 	authConfig := config2.ConnectAuthConfig{
 		Id:             deviceId,
-		Password:       pwd,
+		Secret:       pwd,
 		Servers:        "mqtts://{bootstrap access ip}:8883",
 		UseBootstrap:   true,
 		BsServerCaPath: "./resource/root.pem",
@@ -921,11 +922,18 @@ sdk还提供了MaxBufferMessage参数，若您设置了该参数，当sdk与平�
 authConfig.MaxBufferMessage = 100
 ```
 
-# 5.0开源协议
+# 5.0常见问题
+- 建链返回：` init failed,error = bad user name or password`。
+  排查方法：
+  1. 查看deviceId是否错误：在控制台界面查看设备，在界面中复制`设备ID` ，即为SDK中Id的值。
+
+  2. 确认密码是否正确：在设备创建时用户填入的`密钥` 即为SDK中Secret的值。若是忘记密码，可在设备详情页面重置密钥。
+
+# 6.0开源协议
 - 遵循BSD-3开源许可协议
 
-# 6.0接口文档
+# 7.0接口文档
 参考[设备接入接口文档](./IoT-Device-SDK-Python-API文档.pdf)
 
-# 7.0更多文档
+# 8.0更多文档
 参考[设备接入更多文档](https://support.huaweicloud.com/devg-iothub/iot_02_0178.html)

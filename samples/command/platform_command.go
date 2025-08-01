@@ -42,7 +42,7 @@ func main() {
 	authConfig := &config.ConnectAuthConfig{
 		Id:           "your device id",
 		Servers:      "mqtts://{MQTT_ACCESS_ADDRESS}:8883",
-		Password:     "your password",
+		Secret:       "your Secret",
 		ServerCaPath: "iotda server ca path",
 	}
 	mqttDevice := device2.NewMqttDevice(authConfig)

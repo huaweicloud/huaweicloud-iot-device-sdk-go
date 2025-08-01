@@ -100,9 +100,49 @@ func (mqttClient *MqttDeviceClient) Connect() bool {
 	return internal
 }
 
+func (mqttClient *MqttDeviceClient) configureTLS(options *mqtt.ClientOptions) error {
+	if !strings.ContainsAny(mqttClient.ConnectAuthConfig.Servers, "tls|ssl|mqtts") {
+		return nil
+	}
+
+	ca, err := ioutil.ReadFile(mqttClient.ConnectAuthConfig.ServerCaPath)
+	if err != nil {
+		glog.Error("load server ca failed\n")
+		return err
+	}
+	serverCaPool := x509.NewCertPool()
+	serverCaPool.AppendCertsFromPEM(ca)
+	tlsConfig := &tls.Config{
+		RootCAs:            serverCaPool,
+		InsecureSkipVerify: true,
+		MaxVersion:         tls.VersionTLS13,
+		MinVersion:         tls.VersionTLS12,
+		CipherSuites:       constants.CipherSuites,
+		VerifyConnection:   iot.VerifyConnection(serverCaPool),
+	}
+
+	// 设备使用x.509证书认证
+	if mqttClient.ConnectAuthConfig.AuthType == constants.AuthTypeX509 {
+		if len(mqttClient.ConnectAuthConfig.ServerCaPath) == 0 || len(mqttClient.ConnectAuthConfig.CertFilePath) == 0 || len(mqttClient.ConnectAuthConfig.CertKeyFilePath) == 0 {
+			glog.Error("device use x.509 auth but not set cert")
+			return err
+		}
+		deviceCert, err := tls.LoadX509KeyPair(mqttClient.ConnectAuthConfig.CertFilePath, mqttClient.ConnectAuthConfig.CertKeyFilePath)
+		if err != nil {
+			glog.Error("load device cert failed")
+			return err
+		}
+		var clientCerts []tls.Certificate
+		clientCerts = append(clientCerts, deviceCert)
+		tlsConfig.Certificates = clientCerts
+	}
+	options.SetTLSConfig(tlsConfig)
+	return nil
+}
+
 func (mqttClient *MqttDeviceClient) connectMqttBroker() bool {
 	options := mqtt.NewClientOptions()
-	newPwd, err := iot.HmacSha256(mqttClient.ConnectAuthConfig.Password, iot.TimeStamp())
+	newPwd, err := iot.HmacSha256(mqttClient.ConnectAuthConfig.Secret, iot.TimeStamp())
 	if err != nil {
 		return false
 	}
@@ -126,49 +166,23 @@ func (mqttClient *MqttDeviceClient) connectMqttBroker() bool {
 
 	options.SetClientID(assembleClientId(*mqttClient.ConnectAuthConfig))
 	options.SetUsername(mqttClient.ConnectAuthConfig.Id)
-	options.SetKeepAlive(250 * time.Second)
+	options.SetConnectTimeout(20 * time.Second)
 	// 关闭sdk内部重连，使用自定义重连刷新时间戳
 	options.SetAutoReconnect(false)
 	options.SetConnectRetry(false)
 	options.SetMaxResumePubInFlight(mqttClient.ConnectAuthConfig.InflightMessages)
-	options.SetConnectTimeout(2 * time.Second)
+
+	if mqttClient.ConnectAuthConfig.ConnectTimeout <= 12000 && mqttClient.ConnectAuthConfig.ConnectTimeout >= 30 {
+		options.SetKeepAlive(time.Duration(mqttClient.ConnectAuthConfig.ConnectTimeout) * time.Second)
+	} else {
+		options.SetKeepAlive(120 * time.Second)
+	}
 	options.OnConnectionLost = mqttClient.createConnectionLostHandler()
 	options.OnConnect = mqttClient.createConnectHandler()
 	options.DefaultPublishHandler = mqttClient.createDefaultMessageHandler()
-	if strings.Contains(mqttClient.ConnectAuthConfig.Servers, "tls") ||
-		strings.Contains(mqttClient.ConnectAuthConfig.Servers, "ssl") || strings.Contains(mqttClient.ConnectAuthConfig.Servers, "mqtts") {
-		ca, err := ioutil.ReadFile(mqttClient.ConnectAuthConfig.ServerCaPath)
-		if err != nil {
-			glog.Error("load server ca failed\n")
-			return false
-		}
-		serverCaPool := x509.NewCertPool()
-		serverCaPool.AppendCertsFromPEM(ca)
-		tlsConfig := &tls.Config{
-			RootCAs:            serverCaPool,
-			InsecureSkipVerify: true,
-			MaxVersion:         tls.VersionTLS13,
-			MinVersion:         tls.VersionTLS12,
-			CipherSuites:       constants.CipherSuites,
-			VerifyConnection:   iot.VerifyConnection(serverCaPool),
-		}
 
-		// 设备使用x.509证书认证
-		if mqttClient.ConnectAuthConfig.AuthType == constants.AuthTypeX509 {
-			if len(mqttClient.ConnectAuthConfig.ServerCaPath) == 0 || len(mqttClient.ConnectAuthConfig.CertFilePath) == 0 || len(mqttClient.ConnectAuthConfig.CertKeyFilePath) == 0 {
-				glog.Error("device use x.509 auth but not set cert")
-				return false
-			}
-			deviceCert, err := tls.LoadX509KeyPair(mqttClient.ConnectAuthConfig.CertFilePath, mqttClient.ConnectAuthConfig.CertKeyFilePath)
-			if err != nil {
-				glog.Error("load device cert failed")
-				return false
-			}
-			var clientCerts []tls.Certificate
-			clientCerts = append(clientCerts, deviceCert)
-			tlsConfig.Certificates = clientCerts
-		}
-		options.SetTLSConfig(tlsConfig)
+	if err := mqttClient.configureTLS(options); err != nil {
+		return false
 	}
 	mqttClient.client = mqtt.NewClient(options)
 	if token := mqttClient.client.Connect(); token.WaitTimeout(mqttClient.ConnectAuthConfig.ConnectTimeOut) && token.Error() != nil {

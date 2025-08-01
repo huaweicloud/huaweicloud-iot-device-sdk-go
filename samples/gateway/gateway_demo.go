@@ -40,7 +40,7 @@ func createGateway() *gateway.MqttGatewayDevice {
 	authConfig := &config.ConnectAuthConfig{
 		Id:           "your device id",
 		Servers:      "mqtts://{MQTT_ACCESS_ADDRESS}:8883",
-		Password:     "your password",
+		Secret:       "your Secret",
 		ServerCaPath: "iotda server ca path",
 	}
 	mqttDevice := gateway.NewMqttGatewayDevice(authConfig)
@@ -125,8 +125,8 @@ func updateSubDeviceStats() {
 	gatewayDevice.Client.SubDeviceStatusRespHandler = func(response model.SubDeviceStatusResp) {
 		if len(response.SuccessfulDevices) > 0 {
 			glog.Infof("success update device status.")
-			for _, successDevice := range response.SuccessfulDevices {
-				glog.Infof("update device : %s status: %s", successDevice.DeviceId, successDevice.Status)
+			for _, sucessDevice := range response.SuccessfulDevices {
+				glog.Infof("update device : %s status: %s", sucessDevice.DeviceId, sucessDevice.Status)
 			}
 		}
 		if len(response.FailedDevices) > 0 {

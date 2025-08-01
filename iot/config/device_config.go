@@ -37,7 +37,7 @@ import (
 // ConnectAuthConfig 用于创建设备的参数
 type ConnectAuthConfig struct {
 	Id                 string
-	Password           string
+	Secret             string // 设备密钥
 	VerifyTimestamp    bool
 	Servers            string
 	Qos                byte  // qos default 0
@@ -59,6 +59,7 @@ type ConnectAuthConfig struct {
 	RuleEnable         bool                       // 是否开启端侧规则
 	MaxBufferMessage   int                        // max buffer max
 	InflightMessages   int                        // qos1时最多可以同时发布多条消息，默认20条
+	ConnectTimeout     int                        // 心跳时间
 }
 
 type ScopeConfig struct {

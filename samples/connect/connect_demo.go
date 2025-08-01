@@ -44,7 +44,7 @@ func connectWithSecret() {
 	authConfig := &config.ConnectAuthConfig{
 		Id:           "your device id",
 		Servers:      "mqtts://{MQTT_ACCESS_ADDRESS}:8883",
-		Password:     "your password",
+		Secret:       "your Secret",
 		ServerCaPath: "iotda server ca path",
 	}
 	mqttDevice := device.NewMqttDevice(authConfig)
@@ -85,7 +85,7 @@ func connectWithRetry() {
 	authConfig := &config.ConnectAuthConfig{
 		Id:            "your device id",
 		Servers:       "mqtts://{MQTT_ACCESS_ADDRESS}:8883",
-		Password:      "your password",
+		Secret:        "your Secret",
 		AutoReconnect: &autoReconnect,
 		ServerCaPath:  "iotda server ca path",
 	}

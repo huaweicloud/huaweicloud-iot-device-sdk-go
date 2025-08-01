@@ -15,7 +15,8 @@ go get github.com/huaweicloud/huaweicloud-iot-device-sdk-go
 # 0. Version update instructions
 | Version | Change Type | Description |
 |:-------|:-|:-------------------------------------------------|
-| v1.0.0 | New features | Provides the ability to connect to the Huawei Cloud IoT platform to facilitate users to implement business scenarios such as secure access, device management, data collection, command issuance, device provisioning, and client-side rules |
+| v1.0.1 | Feature Optimization | Added support for modifying MQTT protocol heartbeat settings, included heartbeat instructions, and increased connection timeout from 2s to 20s |
+| v1.0.0 | New features | Provides the ability to connect to the Huawei Cloud IoT platform to facilitate users to implement business scenarios such as secure access, device management, data collection, command issuance, device provisioning, and client-side rules |   
 
 # 1. Preface
 huaweicloud-iot-device-sdk-go provides a Go version of the SDK for devices to access the Huawei Cloud IoT platform. It provides communication capabilities between devices and platforms, as well as advanced services such as device services, gateway services, and OTA. It also provides various The scene provides rich demo codes. IoT device developers can use the SDK to greatly simplify development complexity and quickly access the platform.
@@ -202,7 +203,7 @@ The page has command issuing and message tracking functions.
 	authConfig := &amp;config2.ConnectAuthConfig{
 		Id:       "{your device id}",
 		Servers:  "mqtt://{access_address}:1883",
-		Password: "your device secret",
+		Secret: "your device secret",
 	}
 	mqttDevice := device2.NewMqttDevice(authConfig)
    ```
@@ -214,7 +215,7 @@ The page has command issuing and message tracking functions.
     authConfig := &amp;config.ConnectAuthConfig{
 		Id:       "{your device id}",
 		Servers:  "mqtts://{access_address}:8883",
-		Password: "your device secret",
+		Secret: "your device secret",
 		ServerCaPath: "./resources/root.pem",
 	}
 	mqttDevice := device.NewMqttDevice(authConfig)
@@ -584,7 +585,7 @@ This demo can demonstrate:
     authConfig := &amp;config.ConnectAuthConfig{
 		Id:           "your device id",
 		Servers:      "mqtts://{your access ip}:8883",
-		Password:     "your device key",
+		Secret:     "your device key",
 		ServerCaPath: "./resources/root.pem",
 	}
 	mqttDevice := gateway.NewMqttGatewayDevice(authConfig)
@@ -841,11 +842,11 @@ The value xxx of BaseStrategyKeyword in BootStrapBody is the keyword of the crea
     //Issue the device ID registered on the platform
 	deviceId := "your device id"
 	//Device secret key
-	pwd := "your device password"
+	pwd := "your device Secret"
 
 	authConfig := config2.ConnectAuthConfig{
 		Id:             deviceId,
-		Password:       pwd,
+		Secret:       pwd,
 		Servers:        "mqtts://{bootstrap access ip}:8883",
 		UseBootstrap:   true,
 		BsServerCaPath: "./resource/root.pem",
@@ -921,11 +922,19 @@ The sdk also provides the MaxBufferMessage parameter. If you set this parameter,
 authConfig.MaxBufferMessage = 100
 ```
 
-#5.0 Open Source License
+# 5.0 Frequently Asked Questions
+- Connection returns: `init failed, error = bad user name or password`.  
+  Troubleshooting steps:
+  1. Check if the `deviceId` is incorrect: View the device in the console interface and copy the `Device ID` displayed on the page—this is the value of `Id` in the SDK.
+
+  2. Verify if the password is correct: The `Secret Key` entered by the user when creating the device is the value of `Secret` in the SDK. If the password is forgotten, the secret key can be reset on the device details page.
+
+# 6.0 Open Source License
 - Follow the BSD-3 open source license agreement
 
-# 6.0 interface documentation
+# 7.0 interface documentation
 Refer to [Device Access Interface Documentation](./IoT-Device-SDK-Python-API Documentation.pdf)
 
-# 7.0 More documentation
+# 8.0 More documentation
 Refer to [Device Access More Documentation](https://support.huaweicloud.com/devg-iothub/iot_02_0178.html)
+

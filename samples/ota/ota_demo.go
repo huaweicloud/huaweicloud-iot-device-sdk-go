@@ -44,7 +44,7 @@ func otaUpgrade() {
 	authConfig := &config2.ConnectAuthConfig{
 		Id:           "your device id",
 		Servers:      "mqtts://{MQTT_ACCESS_ADDRESS}:8883",
-		Password:     "your password",
+		Secret:       "your Secret",
 		ServerCaPath: "iotda server ca path",
 	}
 	device := device2.NewMqttDevice(authConfig)
@@ -57,7 +57,7 @@ func otaUpgrade() {
 		return "v1.0", "v1.0"
 	}
 
-	// upgradeType 0：软件升级  1：固件升级  2：OBS软件升级  3：OBS固件升级
+	// upgradeType 0： 软件升级  1： 固件升级  2: OBS软件升级  3:obs固件升级
 	device.Client.DeviceUpgradeHandler = func(upgradeType byte, info model.UpgradeInfo) model.UpgradeProgress {
 		glog.Infof("begin to handle upgrade process")
 		upgradeProcess := model.UpgradeProgress{}
